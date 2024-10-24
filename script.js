@@ -54,5 +54,16 @@ function foo() {
     const inputData = document.querySelector('input[type="text"]').value;
     const username = tg.initDataUnsafe?.user?.username || 'Unknown';
     const userId = tg.initDataUnsafe?.user?.id || 'Unknown';
-    alert(`telegram username: ${username}\nuser id: ${userId}\ninput data: ${inputData}`);
+    // Send GET request with inputData as parameter
+    fetch(`https://kooft.free.beeceptor.com?data=${encodeURIComponent(inputData)}`)
+        .then(response => response.text())
+        .then(data => {
+            console.log('Response:', data);
+            alert('Data submitted successfully! and your data ' + data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting data. Please try again.');
+        });
+
 }
