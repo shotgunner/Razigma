@@ -1,2 +1,5 @@
 Flask==2.3.2
 python-dotenv==1.0.0
+Flask-SQLAlchemy==3.0.2
+flask-admin==1.6.1
+flask-migrate==4.0.7
