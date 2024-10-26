@@ -149,6 +149,31 @@
             const dy = touch1.clientY - touch2.clientY;
             return Math.sqrt(dx * dx + dy * dy);
         }
+
+        // Show initData and initDataUnsafe when the mini app opens
+        window.addEventListener('load', () => {
+            const initData = window.Telegram.WebApp.initData;
+            fetch('/validate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'init_data=' + encodeURIComponent(initData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('Validation successful:', data.message);
+                    console.log('User data:', data.user);
+                } else {
+                    console.error('Validation failed:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error during validation:', error);
+            });
+
+        });
     </script>
     <input type="text" placeholder="Enter your text here">
 </body>
