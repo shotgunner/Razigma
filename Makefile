@@ -23,7 +23,7 @@ run:
 
 # Initialize the database
 init_db:
-	$(VENV_ACTIVATE) && $(PYTHON) DataBase/init.py
+	$(VENV_ACTIVATE) && $(PYTHON) database.py
 
 # Flask database commands
 db_init:

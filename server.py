@@ -5,17 +5,10 @@ import json
 from urllib.parse import parse_qs
 import time
 import os
-from dotenv import load_dotenv
-from DataBase.admin import setup_admin
-from DataBase.init import db
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-load_dotenv()
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+from config import app, db, BOT_TOKEN
+from database import setup_admin
 
-app = Flask(__name__)
-migrate = Migrate(app, db)
-setup_admin(app, db)
+admin = setup_admin(app, db)
 
 def generate_secret_key(bot_token):
     return hmac.new("WebAppData".encode(), bot_token.encode(), hashlib.sha256).digest()
@@ -71,7 +64,9 @@ def serve_index():
 def serve_script():
     return send_from_directory('.', 'script.js')
 
+@app.route('/files/<path:filename>')
+def serve_media(filename):
+    return send_from_directory('uploads', filename)
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
